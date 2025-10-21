@@ -189,8 +189,7 @@ export default function Navigation() {
               {/* Docs Link */}
               <div className="relative group bg-white/1 backdrop-blur-xl rounded-lg border border-white/4 shadow-inner shadow-black/25">
                 <Link
-                  target="_blank"
-                  href="#docs"
+                  href="/docs"
                   className="text-sm font-medium text-gray-300 hover:text-blue-400 transition-all duration-300 flex items-center space-x-1 px-3 py-2 rounded-lg hover:bg-blue-500/10 hover:shadow-lg hover:shadow-blue-500/20 nav-link-hover"
                 >
                   <div className="relative">
@@ -722,7 +721,7 @@ export default function Navigation() {
               {/* Primary Links for Mobile */}
               <div className="mobile-primary-links">
                 <a
-                  href="#docs"
+                  href="/docs"
                   className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
                 >
                   Docs
