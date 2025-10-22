@@ -490,6 +490,13 @@ html:not(.dark) .nextra-sidebar-container {
   }
 }
 
+@media (max-width: 726px){
+  .mobile-menu-panel .mobile-secondary-controls button {
+    padding-left: 2.5rem; /* px-10 */
+    padding-right: 2.5rem; /* px-10 */
+  }
+}
+
 /* Solid backgrounds for dropdown UI */
 
 /* Hamburger panel */
@@ -531,6 +538,9 @@ html:not(.dark) .mobile-menu-panel .mobile-secondary-controls .absolute {
 }
 
 @media (min-width: 1280px)  {
+  .mobile-menu-panel {
+    display: none;
+  }
   .main-nav-links {
     display: flex;
     left:50%
