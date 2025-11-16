@@ -744,6 +744,54 @@ html:not(.dark) .nextra-docs-theme .nextra-sidebar-container {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+<<<<<<< HEAD
+=======
+/* For adding active glow */
+@layer components {
+  .nav-pill {
+    position: relative;
+    border-radius: .625rem;
+    transition: background .25s, color .25s;
+  }
+
+  .nav-glow {
+    --glow-from: #6366f1;
+    --glow-to: #22d3ee;
+    background: linear-gradient(135deg,
+        color-mix(in srgb, var(--glow-from) 14%, transparent),
+        color-mix(in srgb, var(--glow-to) 12%, transparent));
+    box-shadow:
+      0 8px 22px -12px color-mix(in srgb, var(--glow-from) 55%, transparent),
+      0 0 34px -18px color-mix(in srgb, var(--glow-to) 65%, transparent);
+  }
+
+  .nav-glow::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    background: radial-gradient(60% 55% at 50% 50%,
+        color-mix(in srgb, var(--glow-from) 28%, transparent) 0%, transparent 70%);
+    filter: blur(14px);
+    opacity: .55;
+    pointer-events: none;
+  }
+  /* emerald→teal */
+  .nav-glow-contribute {
+    --glow-from: #10b981;
+    --glow-to: #0d9488;
+  }
+
+  /* violet→fuchsia */
+  .nav-glow-community {
+    --glow-from: #8b5cf6;
+    --glow-to: #d946ef;
+  }
+
+
+}
+
+>>>>>>> 0902384 (post revert)
 .nav-link-hover:hover {
   transform: translateY(-2px) scale(1.05);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
