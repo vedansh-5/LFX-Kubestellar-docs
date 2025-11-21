@@ -85,7 +85,7 @@ export default async function Page(props: PageProps) {
         }
 
         return { path: relativePath, text: `> **Error**: Could not include \`${relativePath}\` (File not found)` };
-      } catch (e) {
+      } catch {
         return { path: relativePath, text: `> **Error**: Failed to fetch \`${relativePath}\`` };
       }
     }));
