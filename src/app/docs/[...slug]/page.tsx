@@ -18,15 +18,29 @@ type PageProps = Readonly<{
   searchParams: Promise<{ version?: string }>
 }>
 
+function resolvePath(baseFile: string, relativePath: string) {
+  if (relativePath.startsWith('/')) return relativePath.slice(1);
+  const stack = baseFile.split('/');
+  stack.pop(); // Remove current filename
+  const parts = relativePath.split('/');
+  for (const part of parts) {
+    if (part === '.') continue;
+    if (part === '..') {
+      if (stack.length > 0) stack.pop();
+    } else {
+      stack.push(part);
+    }
+  }
+  return stack.join('/');
+}
+
 export default async function Page(props: PageProps) {
   const params = await props.params
   const searchParams = await props.searchParams
   
-  // Get version from URL or use default
   const version = (searchParams.version as VersionKey) || getDefaultVersion()
   const branch = getBranchForVersion(version)
   
-  // Build page map for this branch
   const { routeMap, filePaths } = await buildPageMapForBranch(branch)
   
   const route = params.slug ? params.slug.join('/') : ''
@@ -42,10 +56,39 @@ export default async function Page(props: PageProps) {
     `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${filePath}`,
     { headers: makeGitHubHeaders(), cache: 'no-store' }
   )
+
   if (!response.ok) notFound()
 
-  const data = await response.text()
-  const processedData = convertHtmlScriptsToJsxComments(data)
+  const rawText = await response.text()
+
+  const filePathToRoute = new Map<string, string>();
+  Object.entries(routeMap).forEach(([r, fp]) => filePathToRoute.set(fp, r));
+
+  const rewrittenText = rawText.replace(/(!?\[.*?\])\((.*?)\)/g, (match, label, link) => {
+    if (/^(http|https|mailto:|#)/.test(link)) return match;
+
+    const isImage = label.startsWith('!');
+    const [linkUrl, linkHash] = link.split('#');
+    
+    const resolvedPath = resolvePath(filePath, linkUrl);
+    
+    if (isImage) {
+       const rawUrl = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${resolvedPath}`;
+       return `${label}(${rawUrl})`;
+    } else {
+       let targetRoute = filePathToRoute.get(resolvedPath);
+       if (!targetRoute) targetRoute = filePathToRoute.get(resolvedPath + '.md');
+       if (!targetRoute) targetRoute = filePathToRoute.get(resolvedPath + '.mdx');
+       
+       if (targetRoute) {
+         return `${label}(/docs/${targetRoute}${linkHash ? '#' + linkHash : ''})`;
+       }
+       
+       return `${label}(https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${resolvedPath})`;
+    }
+  });
+
+  const processedData = convertHtmlScriptsToJsxComments(rewrittenText)
     .replace(/<br\s*\/?>/gi, '<br />')
     .replace(/align=center/g, 'align="center"')
     .replace(/frameborder="0"/g, 'frameBorder="0"')
