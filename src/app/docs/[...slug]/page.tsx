@@ -61,11 +61,46 @@ export default async function Page(props: PageProps) {
 
   const rawText = await response.text()
 
+  let contentWithIncludes = rawText;
+  const includeRegex = /{%\s*include\s+["']([^"']+)["']\s*%}/g;
+  const includeMatches = Array.from(rawText.matchAll(includeRegex));
+
+  if (includeMatches.length > 0) {
+    const uniqueIncludes = [...new Set(includeMatches.map(m => m[1]))];
+    
+    const includeContents = await Promise.all(uniqueIncludes.map(async (relativePath) => {
+      const resolvedPath = resolvePath(filePath, relativePath);
+      const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${resolvedPath}`;
+      
+      try {
+        const res = await fetch(url, { headers: makeGitHubHeaders(), cache: 'no-store' });
+        if (res.ok) {
+            return { path: relativePath, text: await res.text() };
+        }
+        
+        const rootUrl = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${resolvedPath}`;
+        const rootRes = await fetch(rootUrl, { headers: makeGitHubHeaders(), cache: 'no-store' });
+        if (rootRes.ok) {
+            return { path: relativePath, text: await rootRes.text() };
+        }
+
+        return { path: relativePath, text: `> **Error**: Could not include \`${relativePath}\` (File not found)` };
+      } catch (e) {
+        return { path: relativePath, text: `> **Error**: Failed to fetch \`${relativePath}\`` };
+      }
+    }));
+
+    includeContents.forEach(({ path, text }) => {
+      const escapedPath = path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const pattern = new RegExp(`{%\\s*include\\s+["']${escapedPath}["']\\s*%}`, 'g');
+      contentWithIncludes = contentWithIncludes.replace(pattern, () => text);
+    });
+  }
+
   const filePathToRoute = new Map<string, string>();
   Object.entries(routeMap).forEach(([r, fp]) => filePathToRoute.set(fp, r));
 
-  // 1. Rewrite Markdown links/images: [alt](url) or ![alt](url)
-  let rewrittenText = rawText.replace(/(!?\[.*?\])\((.*?)\)/g, (match, label, link) => {
+  let rewrittenText = contentWithIncludes.replace(/(!?\[.*?\])\((.*?)\)/g, (match, label, link) => {
     if (/^(http|https|mailto:|#)/.test(link)) return match;
 
     const isImage = label.startsWith('!');
@@ -89,7 +124,6 @@ export default async function Page(props: PageProps) {
     }
   });
 
-  // 2. Rewrite HTML <img> tags: <img src="...">
   rewrittenText = rewrittenText.replace(/<img\s+([^>]*?)src=["']([^"']+)["']([^>]*?)>/gi, (match, pre, src, post) => {
     if (/^(http|https|mailto:|#|data:)/.test(src)) return match;
 
