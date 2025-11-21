@@ -64,7 +64,8 @@ export default async function Page(props: PageProps) {
   const filePathToRoute = new Map<string, string>();
   Object.entries(routeMap).forEach(([r, fp]) => filePathToRoute.set(fp, r));
 
-  const rewrittenText = rawText.replace(/(!?\[.*?\])\((.*?)\)/g, (match, label, link) => {
+  // 1. Rewrite Markdown links/images: [alt](url) or ![alt](url)
+  let rewrittenText = rawText.replace(/(!?\[.*?\])\((.*?)\)/g, (match, label, link) => {
     if (/^(http|https|mailto:|#)/.test(link)) return match;
 
     const isImage = label.startsWith('!');
@@ -86,6 +87,16 @@ export default async function Page(props: PageProps) {
        
        return `${label}(https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${resolvedPath})`;
     }
+  });
+
+  // 2. Rewrite HTML <img> tags: <img src="...">
+  rewrittenText = rewrittenText.replace(/<img\s+([^>]*?)src=["']([^"']+)["']([^>]*?)>/gi, (match, pre, src, post) => {
+    if (/^(http|https|mailto:|#|data:)/.test(src)) return match;
+
+    const resolvedPath = resolvePath(filePath, src);
+    const rawUrl = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${resolvedPath}`;
+    
+    return `<img ${pre}src="${rawUrl}"${post}>`;
   });
 
   const processedData = convertHtmlScriptsToJsxComments(rewrittenText)
