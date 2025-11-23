@@ -61,46 +61,72 @@ export default async function Page(props: PageProps) {
 
   const rawText = await response.text()
 
-  let contentWithIncludes = rawText;
+  // --- START PROCESSING INCLUDES ---
+  let processedContent = rawText;
+
+  // 1. Process Jekyll-style includes: {% include "path" %}
   const includeRegex = /{%\s*include\s+["']([^"']+)["']\s*%}/g;
-  const includeMatches = Array.from(rawText.matchAll(includeRegex));
+  const includeMatches = Array.from(processedContent.matchAll(includeRegex));
 
   if (includeMatches.length > 0) {
     const uniqueIncludes = [...new Set(includeMatches.map(m => m[1]))];
-    
     const includeContents = await Promise.all(uniqueIncludes.map(async (relativePath) => {
       const resolvedPath = resolvePath(filePath, relativePath);
       const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${docsPath}${resolvedPath}`;
-      
       try {
         const res = await fetch(url, { headers: makeGitHubHeaders(), cache: 'no-store' });
-        if (res.ok) {
-            return { path: relativePath, text: await res.text() };
-        }
-        
+        if (res.ok) return { path: relativePath, text: await res.text() };
         const rootUrl = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${resolvedPath}`;
         const rootRes = await fetch(rootUrl, { headers: makeGitHubHeaders(), cache: 'no-store' });
-        if (rootRes.ok) {
-            return { path: relativePath, text: await rootRes.text() };
-        }
-
+        if (rootRes.ok) return { path: relativePath, text: await rootRes.text() };
         return { path: relativePath, text: `> **Error**: Could not include \`${relativePath}\` (File not found)` };
       } catch {
         return { path: relativePath, text: `> **Error**: Failed to fetch \`${relativePath}\`` };
       }
     }));
-
     includeContents.forEach(({ path, text }) => {
       const escapedPath = path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const pattern = new RegExp(`{%\\s*include\\s+["']${escapedPath}["']\\s*%}`, 'g');
-      contentWithIncludes = contentWithIncludes.replace(pattern, () => text);
+      processedContent = processedContent.replace(pattern, () => text);
     });
   }
+
+  // 2. Process partial includes: {% include-markdown "path" start="..." end="..." %}
+  const includeMarkdownRegex = /{%-?\s*include-markdown\s+["']([^"']+)["']\s+start=["']([^"']+)["']\s+end=["']([^"']+)["']\s*-?%}/gs;
+  const includeMarkdownMatches = Array.from(processedContent.matchAll(includeMarkdownRegex));
+
+  if (includeMarkdownMatches.length > 0) {
+    for (const match of includeMarkdownMatches) {
+      const [fullMatch, relativePath, startMarker, endMarker] = match;
+      const resolvedPath = resolvePath(filePath, relativePath);
+      const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${resolvedPath}`;
+      try {
+        const res = await fetch(url, { headers: makeGitHubHeaders(), cache: 'no-store' });
+        if (res.ok) {
+          const fileContent = await res.text();
+          const startIndex = fileContent.indexOf(startMarker);
+          const endIndex = fileContent.indexOf(endMarker);
+          if (startIndex !== -1 && endIndex !== -1) {
+            const extractedContent = fileContent.substring(startIndex + startMarker.length, endIndex).trim();
+            processedContent = processedContent.replace(fullMatch, extractedContent);
+          } else {
+            processedContent = processedContent.replace(fullMatch, `> **Error**: Markers not found in \`${relativePath}\``);
+          }
+        } else {
+          processedContent = processedContent.replace(fullMatch, `> **Error**: Could not include \`${relativePath}\` (File not found)`);
+        }
+      } catch {
+        processedContent = processedContent.replace(fullMatch, `> **Error**: Failed to fetch \`${relativePath}\``);
+      }
+    }
+  }
+  // --- END PROCESSING INCLUDES ---
 
   const filePathToRoute = new Map<string, string>();
   Object.entries(routeMap).forEach(([r, fp]) => filePathToRoute.set(fp, r));
 
-  let rewrittenText = contentWithIncludes.replace(/(!?\[.*?\])\((.*?)\)/g, (match, label, link) => {
+  // Rewrite Markdown links/images using the fully processed content
+  let rewrittenText = processedContent.replace(/(!?\[.*?\])\((.*?)\)/g, (match, label, link) => {
     if (/^(http|https|mailto:|#)/.test(link)) return match;
 
     const isImage = label.startsWith('!');
