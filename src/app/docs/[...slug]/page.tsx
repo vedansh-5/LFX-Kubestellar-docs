@@ -187,16 +187,29 @@ export default async function Page(props: PageProps) {
     return `<img ${pre}src="${rawUrl}"${post}>`;
   });
 
-  const processedData = convertHtmlScriptsToJsxComments(rewrittenText)
+  // 3. Pre-process Jinja and Pymdown syntax before MDX compilation
+  const preProcessedText = rewrittenText
+    // Replace Jinja-style variables {{ config.var_name }} with a placeholder.
+    // This prevents MDX from trying to parse it as a JSX expression.
+    .replace(/{{\s*config\.([\w_]+)\s*}}/g, (match, varName) => `[${varName}]`)
+    // Convert Pymdown code block attributes into standard MDX attributes.
+    // e.g., ``` {.bash .no-copy} -> ```bash .no-copy
+    // e.g., ``` title="file.sh" -> ```sh title="file.sh"
+    .replace(/```\s*{([^}]+)}\s*\n/g, (match, attrs) => {
+        // Normalize attributes: remove leading dot, handle multiple attrs.
+        const normalizedAttrs = attrs.replace(/^\./, '').replace(/\s+\./g, ' ');
+        return `\`\`\`${normalizedAttrs}\n`;
+    });
+
+
+  const processedData = convertHtmlScriptsToJsxComments(preProcessedText)
     .replace(/<br\s*\/?>/gi, '<br />')
     .replace(/align=center/g, 'align="center"')
     .replace(/frameborder="0"/g, 'frameBorder="0"')
     .replace(/allowfullscreen/g, 'allowFullScreen')
     .replace(/scrolling=no/g, 'scrolling="no"')
     .replace(/onload="[^"]*"/g, '')
-    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
-    .replace(/<\/?ol>/g, '')
-    .replace(/<\/?li>/g, '')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
 
   const rawJs = await compileMdx(processedData, { filePath })
   const { default: MDXContent, toc, metadata } = evaluate(rawJs, component)
