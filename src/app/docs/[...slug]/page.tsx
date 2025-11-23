@@ -91,7 +91,35 @@ export default async function Page(props: PageProps) {
     });
   }
 
-  // 2. Process partial includes: {% include-markdown "path" start="..." end="..." %}
+  // 2. Process full markdown includes (without start/end): {% include-markdown "path" %}
+  const fullIncludeMarkdownRegex = /{%-?\s*include-markdown\s+["']([^"']+)["']\s*-?%}/g;
+  // This regex is designed to not match the version with start/end attributes.
+  // We'll process these matches and remove them from the main string before the next step.
+  const fullIncludeMarkdownMatches = Array.from(processedContent.matchAll(fullIncludeMarkdownRegex));
+  
+  if (fullIncludeMarkdownMatches.length > 0) {
+    for (const match of fullIncludeMarkdownMatches) {
+      const [fullMatch, relativePath] = match;
+      // Skip if it's the more complex version
+      if (fullMatch.includes('start=') || fullMatch.includes('end=')) continue;
+
+      const resolvedPath = resolvePath(filePath, relativePath);
+      const url = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${resolvedPath}`;
+      try {
+        const res = await fetch(url, { headers: makeGitHubHeaders(), cache: 'no-store' });
+        if (res.ok) {
+          const fileContent = await res.text();
+          processedContent = processedContent.replace(fullMatch, () => fileContent);
+        } else {
+           processedContent = processedContent.replace(fullMatch, `> **Error**: Could not include \`${relativePath}\` (File not found)`);
+        }
+      } catch {
+        processedContent = processedContent.replace(fullMatch, `> **Error**: Failed to fetch \`${relativePath}\``);
+      }
+    }
+  }
+
+  // 3. Process partial includes: {% include-markdown "path" start="..." end="..." %}
   const includeMarkdownRegex = /{%-?\s*include-markdown\s+["']([^"']+)["']\s+start=["']([^"']+)["']\s+end=["']([^"']+)["']\s*-?%}/gs;
   const includeMarkdownMatches = Array.from(processedContent.matchAll(includeMarkdownRegex));
 
