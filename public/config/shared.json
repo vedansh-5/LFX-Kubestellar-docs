@@ -138,10 +138,10 @@
         "isDev": true
       }
     },
-    "kubectl-claude": {
+    "klaude": {
       "latest": {
-        "label": "v0.5.0 (Latest)",
-        "branch": "docs/kubectl-claude/0.5.0",
+        "label": "v0.6.0 (Latest)",
+        "branch": "docs/klaude/0.6.0",
         "isDefault": true
       },
       "main": {
@@ -150,29 +150,9 @@
         "isDefault": false,
         "isDev": true
       },
-      "0.4.4": {
-        "label": "v0.4.4",
-        "branch": "docs/kubectl-claude/0.4.4",
-        "isDefault": false
-      },
-      "0.4.3": {
-        "label": "v0.4.3",
-        "branch": "docs/kubectl-claude/0.4.3",
-        "isDefault": false
-      },
-      "0.4.0": {
-        "label": "v0.4.0",
-        "branch": "docs/kubectl-claude/0.4.0",
-        "isDefault": false
-      },
-      "0.4.5": {
-        "label": "v0.4.5",
-        "branch": "docs/kubectl-claude/0.4.5",
-        "isDefault": false
-      },
-      "0.4.6": {
-        "label": "v0.4.6",
-        "branch": "docs/kubectl-claude/0.4.6",
+      "0.5.0": {
+        "label": "v0.5.0",
+        "branch": "docs/klaude/0.5.0",
         "isDefault": false
       }
     }
@@ -198,10 +178,10 @@
       "basePath": "multi-plugin",
       "currentVersion": "0.1.0"
     },
-    "kubectl-claude": {
-      "name": "kubectl-claude",
-      "basePath": "kubectl-claude",
-      "currentVersion": "0.5.0"
+    "klaude": {
+      "name": "klaude",
+      "basePath": "klaude",
+      "currentVersion": "0.6.0"
     }
   },
   "relatedProjects": [
@@ -211,8 +191,8 @@
       "description": "Multi-cluster configuration management"
     },
     {
-      "title": "kubectl-claude",
-      "href": "/docs/kubectl-claude/overview/introduction",
+      "title": "klaude",
+      "href": "/docs/klaude/overview/introduction",
       "description": "AI-powered kubectl plugin"
     },
     {
@@ -236,7 +216,7 @@
     "a2a": "https://github.com/kubestellar/a2a/edit/main/docs",
     "kubeflex": "https://github.com/kubestellar/kubeflex/edit/main/docs",
     "multi-plugin": "https://github.com/kubestellar/kubectl-multi-plugin/edit/main/docs",
-    "kubectl-claude": "https://github.com/kubestellar/kubectl-claude/edit/main/docs"
+    "klaude": "https://github.com/kubestellar/klaude/edit/main/docs"
   },
   "updatedAt": "2026-01-15T15:43:14.944Z"
 }
