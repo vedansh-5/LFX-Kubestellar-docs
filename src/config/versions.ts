@@ -201,6 +201,31 @@ const KLAUDE_VERSIONS: Record<string, VersionInfo> = {
     branch: "docs/klaude/0.5.0",
     isDefault: false,
   },
+  "0.4.6": {
+    label: "v0.4.6",
+    branch: "docs/klaude/0.4.6",
+    isDefault: false,
+  },
+  "0.4.5": {
+    label: "v0.4.5",
+    branch: "docs/klaude/0.4.5",
+    isDefault: false,
+  },
+  "0.4.4": {
+    label: "v0.4.4",
+    branch: "docs/klaude/0.4.4",
+    isDefault: false,
+  },
+  "0.4.3": {
+    label: "v0.4.3",
+    branch: "docs/klaude/0.4.3",
+    isDefault: false,
+  },
+  "0.4.0": {
+    label: "v0.4.0",
+    branch: "docs/klaude/0.4.0",
+    isDefault: false,
+  },
 }
 
 // All projects configuration
