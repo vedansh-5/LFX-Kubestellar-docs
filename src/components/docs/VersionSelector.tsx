@@ -142,14 +142,14 @@ export function VersionSelector({ className = '', isMobile = false }: VersionSel
 
     // Latest/default version uses production URL
     if (versionKey === 'latest' || version.isDefault) {
-      window.location.href = \`https://kubestellar.io\${pathname}\`;
+      window.location.href = `https://kubestellar.io${pathname}`;
       return;
     }
 
     // Other versions use Netlify branch deploys
     // Netlify converts branch names: docs/klaude/0.5.0 -> docs-klaude-0-5-0
     const branchSlug = version.branch.replace(/\//g, '-').replace(/\./g, '-');
-    window.location.href = \`https://\${branchSlug}--kubestellar-docs.netlify.app\${pathname}\`;
+    window.location.href = `https://${branchSlug}--kubestellar-docs.netlify.app${pathname}`;
   };
 
   if (isMobile) {
