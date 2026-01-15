@@ -192,6 +192,19 @@
   status = 301
   force = true
 
+# Redirect klaude.kubestellar.io to kubestellar.io/docs/klaude
+[[redirects]]
+  from = "https://klaude.kubestellar.io/*"
+  to = "https://kubestellar.io/docs/klaude/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://klaude.kubestellar.io"
+  to = "https://kubestellar.io/docs/klaude/overview/introduction"
+  status = 301
+  force = true
+
 # Redirect project root pages to first content page
 [[redirects]]
   from = "/docs/a2a"
@@ -220,6 +233,16 @@
 
 [[redirects]]
   from = "/docs/multi-plugin/"
+  to = "/docs/multi-plugin/overview/introduction"
+  status = 302
+
+[[redirects]]
+  from = "/docs/klaude"
+  to = "/docs/klaude/overview/introduction"
+  status = 302
+
+[[redirects]]
+  from = "/docs/klaude/"
   to = "/docs/multi-plugin/overview/introduction"
   status = 302
 
