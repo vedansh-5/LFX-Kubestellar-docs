@@ -330,6 +330,20 @@ App-centric multi-cluster deployment and operations.
 | `reconcile` | Bring clusters back in sync |
 | `preview_changes` | Dry-run to see what would change |
 
+#### Helm Operations
+| Tool | Description |
+|------|-------------|
+| `helm_install` | Install or upgrade Helm charts to clusters |
+| `helm_uninstall` | Uninstall Helm releases from clusters |
+| `helm_list` | List Helm releases across clusters |
+| `helm_rollback` | Rollback a release to a previous revision |
+
+#### Resource Management
+| Tool | Description |
+|------|-------------|
+| `delete_resource` | Delete K8s resources by kind/name |
+| `kubectl_apply` | Apply any manifest using dynamic client |
+
 ### Slash Commands
 
 | Command | Description |
@@ -339,6 +353,10 @@ App-centric multi-cluster deployment and operations.
 | `/deploy` | Deploy or update an app |
 | `/gitops-sync` | Sync clusters from git |
 | `/gitops-drift` | Check for drift from git |
+| `/helm-install` | Install or upgrade Helm charts |
+| `/helm-uninstall` | Uninstall Helm releases |
+| `/helm-rollback` | Rollback to previous revision |
+| `/delete` | Delete K8s resources |
 
 ### Example Workflows
 
@@ -362,6 +380,30 @@ All healthy
 Drift detected:
   - prod-west: ConfigMap/app-config differs
   - staging: Deployment/api has extra replicas
+```
+
+**"Install nginx chart to all clusters"**
+```
+Installing nginx to 3 clusters...
+  - prod-east: installed (v1.25.0)
+  - prod-west: installed (v1.25.0)
+  - staging: installed (v1.25.0)
+All releases healthy
+```
+
+**"Delete the old configmap"**
+```
+Deleting ConfigMap/old-config from 3 clusters...
+  - prod-east: deleted
+  - prod-west: deleted
+  - staging: not-found (already removed)
+```
+
+**"Rollback redis to previous version"**
+```
+Rolling back redis in 2 clusters...
+  - prod-east: rolled back to revision 3
+  - prod-west: rolled back to revision 3
 ```
 
 ---
