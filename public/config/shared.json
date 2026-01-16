@@ -164,6 +164,16 @@
         "isDefault": false,
         "isDev": true
       },
+      "0.7.1": {
+        "label": "v0.7.1",
+        "branch": "docs/klaude/0.7.1",
+        "isDefault": false
+      },
+      "0.6.0": {
+        "label": "v0.6.0",
+        "branch": "docs/klaude/0.6.0",
+        "isDefault": false
+      },
       "0.5.0": {
         "label": "v0.5.0",
         "branch": "docs/klaude/0.5.0",
@@ -192,16 +202,6 @@
       "0.4.0": {
         "label": "v0.4.0",
         "branch": "docs/klaude/0.4.0",
-        "isDefault": false
-      },
-      "0.6.0": {
-        "label": "v0.6.0",
-        "branch": "docs/klaude/0.6.0",
-        "isDefault": false
-      },
-      "0.7.1": {
-        "label": "v0.7.1",
-        "branch": "docs/klaude/0.7.1",
         "isDefault": false
       }
     }
