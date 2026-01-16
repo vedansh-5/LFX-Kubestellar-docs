@@ -43,8 +43,8 @@ jobs:
           ATTEMPT=0
 
           while [ $ATTEMPT -lt $MAX_ATTEMPTS ]; do
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL" || echo "000")
-            if [ "$STATUS" = "200" ]; then
+            STATUS=$(curl -sL -o /dev/null -w "%{http_code}" "$PREVIEW_URL" || echo "000")
+            if [ "$STATUS" = "200" ] || [ "$STATUS" = "307" ] || [ "$STATUS" = "301" ] || [ "$STATUS" = "302" ]; then
               echo "Preview is ready!"
               echo "url=$PREVIEW_URL" >> $GITHUB_OUTPUT
               exit 0
