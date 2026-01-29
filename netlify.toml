@@ -280,16 +280,6 @@
   to = "/docs/kubestellar-mcp/overview/introduction"
   status = 302
 
-# Backwards-compat redirects: /docs/klaude/* -> /docs/kubestellar-mcp/*
-[[redirects]]
-  from = "/docs/klaude/*"
-  to = "/docs/kubestellar-mcp/:splat"
-  status = 301
-
-[[redirects]]
-  from = "/docs/klaude"
-  to = "/docs/kubestellar-mcp/overview/introduction"
-  status = 301
 
 [[redirects]]
   from = "/agenda"
