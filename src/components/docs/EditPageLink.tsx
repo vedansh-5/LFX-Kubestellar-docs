@@ -63,7 +63,7 @@ const SOURCE_REPOS: Record<string, { repo: string; docsPath: string }> = {
   a2a: { repo: 'kubestellar/a2a', docsPath: 'docs' },
   kubeflex: { repo: 'kubestellar/kubeflex', docsPath: 'docs' },
   'multi-plugin': { repo: 'kubestellar/kubectl-multi-plugin', docsPath: 'docs' },
-  'kubestellar-mcp': { repo: 'kubestellar/klaude', docsPath: 'docs' },
+  'kubestellar-mcp': { repo: 'kubestellar/kubestellar-mcp', docsPath: 'docs' },
 };
 
 // Projects whose docs live in the docs repo itself (not a separate source repo)
