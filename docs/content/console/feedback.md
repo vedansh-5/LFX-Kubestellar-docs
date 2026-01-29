@@ -8,7 +8,7 @@ description: >
 
 # Feedback System
 
-KubeStellar Klaude Console has a unique feedback system. When you report a bug or request a feature, AI helps create the fix automatically!
+KubeStellar Console has a unique feedback system. When you report a bug or request a feature, AI helps create the fix automatically!
 
 ![Feedback Dialog](images/feedback-dialog.png)
 

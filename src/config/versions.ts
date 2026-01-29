@@ -16,7 +16,7 @@ export const NETLIFY_SITE_NAME = "kubestellar-docs"
 export const PRODUCTION_URL = "https://kubestellar.io"
 
 // Project identifiers
-export type ProjectId = "kubestellar" | "a2a" | "kubeflex" | "multi-plugin" | "klaude" | "console"
+export type ProjectId = "kubestellar" | "a2a" | "kubeflex" | "multi-plugin" | "kubestellar-mcp" | "console"
 
 // Version info structure
 export interface VersionInfo {
@@ -183,8 +183,8 @@ const MULTI_PLUGIN_VERSIONS: Record<string, VersionInfo> = {
   },
 }
 
-// klaude versions (formerly kubectl-claude)
-const KLAUDE_VERSIONS: Record<string, VersionInfo> = {
+// kubestellar-mcp versions (formerly klaude/kubectl-claude)
+const KUBESTELLAR_MCP_VERSIONS: Record<string, VersionInfo> = {
   latest: {
     label: "v0.8.1 (Latest)",
     branch: "docs/klaude/0.8.1",
@@ -287,13 +287,13 @@ export const PROJECTS: Record<ProjectId, ProjectConfig> = {
     contentPath: "docs/content/multi-plugin",
     versions: MULTI_PLUGIN_VERSIONS,
   },
-  "klaude": {
-    id: "klaude",
-    name: "klaude",
-    basePath: "klaude",
+  "kubestellar-mcp": {
+    id: "kubestellar-mcp",
+    name: "KubeStellar MCP",
+    basePath: "kubestellar-mcp",
     currentVersion: "0.7.1",
-    contentPath: "docs/content/klaude",
-    versions: KLAUDE_VERSIONS,
+    contentPath: "docs/content/kubestellar-mcp",
+    versions: KUBESTELLAR_MCP_VERSIONS,
   },
   "console": {
     id: "console",
@@ -316,8 +316,8 @@ export function getProjectFromPath(pathname: string): ProjectConfig {
   if (pathname.startsWith("/docs/multi-plugin")) {
     return PROJECTS["multi-plugin"]
   }
-  if (pathname.startsWith("/docs/klaude") || pathname.startsWith("/docs/related-projects/klaude")) {
-    return PROJECTS["klaude"]
+  if (pathname.startsWith("/docs/kubestellar-mcp") || pathname.startsWith("/docs/related-projects/kubestellar-mcp")) {
+    return PROJECTS["kubestellar-mcp"]
   }
   if (pathname.startsWith("/docs/console")) {
     return PROJECTS["console"]
