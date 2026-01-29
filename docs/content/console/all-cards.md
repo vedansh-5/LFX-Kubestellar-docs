@@ -150,13 +150,13 @@ Every card has:
 
 ---
 
-### Klaude AI Cards (3)
+### AI Cards (3)
 
 | # | Card | What it shows |
 |---|------|---------------|
-| 51 | **Klaude Issues** | Issues detected by Klaude AI |
-| 52 | **Klaude Kubeconfig Audit** | Audit of your kubeconfig |
-| 53 | **Klaude Health Check** | AI health check gauge |
+| 51 | **AI Issues** | Issues detected by AI |
+| 52 | **Kubeconfig Audit** | Audit of your kubeconfig |
+| 53 | **AI Health Check** | AI health check gauge |
 
 ---
 

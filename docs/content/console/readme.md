@@ -1,12 +1,12 @@
 ---
-title: "KubeStellar Klaude Console (kkc)"
+title: "KubeStellar Console"
 linkTitle: "Console"
 weight: 5
 description: >
   AI-powered multi-cluster Kubernetes dashboard
 ---
 
-# KubeStellar Klaude Console
+# KubeStellar Console
 
 **Your clusters, your way - AI that learns how you work**
 
@@ -14,7 +14,7 @@ description: >
 
 ## What is it?
 
-KubeStellar Klaude Console (kkc) is like a smart control room for all your Kubernetes clusters. Think of it as a dashboard that:
+KubeStellar Console is like a smart control room for all your Kubernetes clusters. Think of it as a dashboard that:
 
 - Shows you everything happening across all your clusters in one place
 - Learns what you care about and shows you that first
@@ -121,7 +121,7 @@ The bug-to-squash workflow:
 
 ### Try the Preview (No Installation)
 
-See it running at [kubestellarklaudeconsole.netlify.app](https://kubestellarklaudeconsole.netlify.app)
+See it running at [kubestellarconsole.netlify.app](https://kubestellarconsole.netlify.app)
 
 ### Run Locally (5 minutes)
 
@@ -136,7 +136,7 @@ cd console
 
 Open http://localhost:5174 and sign in with GitHub.
 
-> **Note**: You'll need klaude plugins installed. See [Installation](installation.md) for the full setup with all 6 components.
+> **Note**: You'll need kubestellar-mcp plugins installed. See [Installation](installation.md) for the full setup with all 6 components.
 
 ### Run in Kubernetes
 
@@ -144,16 +144,16 @@ Open http://localhost:5174 and sign in with GitHub.
 # Create secrets
 # NOTE: Do not put real secrets directly in commands or commit them to git.
 # Prefer environment variables or a secrets file (e.g. --from-env-file) that is not version-controlled.
-kubectl create namespace kkc
-kubectl create secret generic kkc-secrets \
-  --namespace kkc \
+kubectl create namespace ksc
+kubectl create secret generic ksc-secrets \
+  --namespace ksc \
   --from-literal=github-client-id="$GITHUB_CLIENT_ID" \
   --from-literal=github-client-secret="$GITHUB_CLIENT_SECRET"
 
 # Install with Helm
-helm install kkc oci://ghcr.io/kubestellar/charts/console \
-  --namespace kkc \
-  --set github.existingSecret=kkc-secrets
+helm install ksc oci://ghcr.io/kubestellar/charts/console \
+  --namespace ksc \
+  --set github.existingSecret=ksc-secrets
 ```
 
 [Full installation guide](installation.md)

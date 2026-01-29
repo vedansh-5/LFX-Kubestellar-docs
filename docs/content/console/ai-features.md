@@ -8,7 +8,7 @@ description: >
 
 # AI Features
 
-KubeStellar Klaude Console uses AI to help you manage your clusters. Think of it as having a helpful assistant who knows Kubernetes.
+KubeStellar Console uses AI to help you manage your clusters. Think of it as having a helpful assistant who knows Kubernetes.
 
 ![AI Missions Panel](images/ai-missions-panel.png)
 
