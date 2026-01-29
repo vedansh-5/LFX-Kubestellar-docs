@@ -187,7 +187,7 @@ const MULTI_PLUGIN_VERSIONS: Record<string, VersionInfo> = {
 const KUBESTELLAR_MCP_VERSIONS: Record<string, VersionInfo> = {
   latest: {
     label: "v0.8.1 (Latest)",
-    branch: "docs/klaude/0.8.1",
+    branch: "docs/kubestellar-mcp/0.8.1",
     isDefault: true,
   },
   main: {
@@ -195,46 +195,6 @@ const KUBESTELLAR_MCP_VERSIONS: Record<string, VersionInfo> = {
     branch: "main",
     isDefault: false,
     isDev: true,
-  },
-  "0.7.1": {
-    label: "v0.7.1",
-    branch: "docs/klaude/0.7.1",
-    isDefault: false,
-  },
-  "0.6.0": {
-    label: "v0.6.0",
-    branch: "docs/klaude/0.6.0",
-    isDefault: false,
-  },
-  "0.5.0": {
-    label: "v0.5.0",
-    branch: "docs/klaude/0.5.0",
-    isDefault: false,
-  },
-  "0.4.6": {
-    label: "v0.4.6",
-    branch: "docs/klaude/0.4.6",
-    isDefault: false,
-  },
-  "0.4.5": {
-    label: "v0.4.5",
-    branch: "docs/klaude/0.4.5",
-    isDefault: false,
-  },
-  "0.4.4": {
-    label: "v0.4.4",
-    branch: "docs/klaude/0.4.4",
-    isDefault: false,
-  },
-  "0.4.3": {
-    label: "v0.4.3",
-    branch: "docs/klaude/0.4.3",
-    isDefault: false,
-  },
-  "0.4.0": {
-    label: "v0.4.0",
-    branch: "docs/klaude/0.4.0",
-    isDefault: false,
   },
 }
 
