@@ -3,12 +3,12 @@ title: "Console Features"
 linkTitle: "Features"
 weight: 2
 description: >
-  Detailed guide to KubeStellar Klaude Console features
+  Detailed guide to KubeStellar Console features
 ---
 
-# Klaude Console Features
+# KubeStellar Console Features
 
-This guide covers the main features of the KubeStellar Klaude Console.
+This guide covers the main features of the KubeStellar Console.
 
 ## Dashboard
 
