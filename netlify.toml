@@ -213,28 +213,28 @@
   status = 301
   force = true
 
-# Redirect klaude.kubestellar.io to kubestellar.io/docs/kubestellar-mcp
+# Redirect mcp.kubestellar.io to kubestellar.io/docs/kubestellar-mcp
 # Handle old URL structure with /en/ prefix
 [[redirects]]
-  from = "https://klaude.kubestellar.io/en/*"
+  from = "https://mcp.kubestellar.io/en/*"
   to = "https://kubestellar.io/docs/kubestellar-mcp/:splat"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://klaude.kubestellar.io/en"
+  from = "https://mcp.kubestellar.io/en"
   to = "https://kubestellar.io/docs/kubestellar-mcp/overview/introduction"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://klaude.kubestellar.io/*"
+  from = "https://mcp.kubestellar.io/*"
   to = "https://kubestellar.io/docs/kubestellar-mcp/:splat"
   status = 301
   force = true
 
 [[redirects]]
-  from = "https://klaude.kubestellar.io"
+  from = "https://mcp.kubestellar.io"
   to = "https://kubestellar.io/docs/kubestellar-mcp/overview/introduction"
   status = 301
   force = true
