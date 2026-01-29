@@ -3,12 +3,12 @@ title: "Console Overview"
 linkTitle: "Overview"
 weight: 1
 description: >
-  Overview of the KubeStellar Klaude Console features and capabilities
+  Overview of the KubeStellar Console features and capabilities
 ---
 
-# KubeStellar Klaude Console
+# KubeStellar Console
 
-The KubeStellar Klaude Console is a modern, AI-powered multi-cluster management interface that provides real-time monitoring, intelligent insights, and a customizable dashboard experience for managing Kubernetes clusters at scale.
+The KubeStellar Console is a modern, AI-powered multi-cluster management interface that provides real-time monitoring, intelligent insights, and a customizable dashboard experience for managing Kubernetes clusters at scale.
 
 ![Dashboard Overview](images/dashboard-overview.png)
 
@@ -46,7 +46,7 @@ The KubeStellar Klaude Console is a modern, AI-powered multi-cluster management 
 
 ### Demo Mode
 
-The Klaude Console includes a demo mode that showcases all features with simulated data. To run in demo mode:
+The KubeStellar Console includes a demo mode that showcases all features with simulated data. To run in demo mode:
 
 ```bash
 cd web
@@ -59,25 +59,25 @@ Navigate to `http://localhost:5174` to explore the console with demo data.
 
 For production use, the console requires:
 
-1. **KKC Agent**: A local agent that connects to your kubeconfig
-2. **Backend API**: The KKC API server running on port 8080
+1. **KSC Agent**: A local agent that connects to your kubeconfig
+2. **Backend API**: The KSC API server running on port 8080
 
 See the [installation guide](installation.md) for detailed setup instructions.
 
 ## Architecture
 
-The Klaude Console consists of:
+The KubeStellar Console consists of:
 
 - **Frontend**: React + TypeScript + Vite application
-- **KKC Agent**: Go-based agent that interfaces with Kubernetes clusters
+- **KSC Agent**: Go-based agent that interfaces with Kubernetes clusters
 - **Backend API**: REST API for data aggregation and AI features
 
 ## Documentation
 
-- [Features Guide](klaude-console-features.md) - Detailed feature documentation
-- [Card Reference](klaude-console-cards.md) - Complete list of available cards
-- [Rewards System](klaude-console-rewards.md) - Community engagement and rewards
-- [Updates](klaude-console-updates.md) - Release channels and version management
+- [Features Guide](console-features.md) - Detailed feature documentation
+- [Card Reference](console-cards.md) - Complete list of available cards
+- [Rewards System](console-rewards.md) - Community engagement and rewards
+- [Updates](console-updates.md) - Release channels and version management
 
 ## Community
 

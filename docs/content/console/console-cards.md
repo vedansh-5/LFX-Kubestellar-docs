@@ -3,12 +3,12 @@ title: "Card Reference"
 linkTitle: "Cards"
 weight: 3
 description: >
-  Complete reference of all dashboard cards available in the Klaude Console
+  Complete reference of all dashboard cards available in the KubeStellar Console
 ---
 
 # Card Reference
 
-The Klaude Console includes over 100 dashboard cards organized into categories. Cards can display live data from your clusters or demo data for evaluation.
+The KubeStellar Console includes over 100 dashboard cards organized into categories. Cards can display live data from your clusters or demo data for evaluation.
 
 ![Card Catalog](images/card-catalog.png)
 
@@ -127,13 +127,13 @@ The Klaude Console includes over 100 dashboard cards organized into categories. 
 | Resource Trend | CPU, memory, pods, nodes over time | Live |
 | GPU Utilization | GPU allocation trend | Live |
 
-### Klaude AI (3 cards)
+### AI (3 cards)
 
 | Card | Description | Data Source |
 |------|-------------|-------------|
-| Klaude Issues | AI-powered issue detection | Live |
-| Klaude Kubeconfig Audit | Audit kubeconfig for stale contexts | Live |
-| Klaude Health Check | Comprehensive AI health analysis | Live |
+| AI Issues | AI-powered issue detection | Live |
+| AI Kubeconfig Audit | Audit kubeconfig for stale contexts | Live |
+| AI Health Check | Comprehensive AI health analysis | Live |
 
 ### Alerting (2 cards)
 

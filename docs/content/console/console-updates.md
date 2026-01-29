@@ -3,12 +3,12 @@ title: "Updates and Releases"
 linkTitle: "Updates"
 weight: 5
 description: >
-  Release channels and version management for the Klaude Console
+  Release channels and version management for the KubeStellar Console
 ---
 
 # Updates and Releases
 
-The KubeStellar Klaude Console follows a regular release schedule with two update channels.
+The KubeStellar Console follows a regular release schedule with two update channels.
 
 ## Release Channels
 
