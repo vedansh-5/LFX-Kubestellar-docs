@@ -183,7 +183,7 @@ const MULTI_PLUGIN_VERSIONS: Record<string, VersionInfo> = {
   },
 }
 
-// kubestellar-mcp versions (formerly klaude/kubectl-claude)
+// kubestellar-mcp versions
 const KUBESTELLAR_MCP_VERSIONS: Record<string, VersionInfo> = {
   latest: {
     label: "v0.8.1 (Latest)",
